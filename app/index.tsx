@@ -1,19 +1,13 @@
-import { View, Text } from "react-native";
+import { globalStyles } from "@/styles/global-styles";
 import React from "react";
+
+import { View, Text } from "react-native";
 
 const CalculatorApp = () => {
   return (
-    <View>
-      <Text
-        style={{
-          fontFamily: "SpaceMonoRegular",
-          fontSize: 30,
-          textAlign: "center",
-          marginTop: 50,
-        }}
-      >
-        index
-      </Text>
+    <View style={globalStyles.calculatorContainer}>
+      <Text style={globalStyles.mainResult}>index</Text>
+      <Text style={globalStyles.subResult}>index</Text>
     </View>
   );
 };
