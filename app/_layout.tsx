@@ -3,7 +3,8 @@ import React from "react";
 import { Slot } from "expo-router";
 
 import { useFonts } from "expo-font";
-
+import { Colors } from "@/constants/Colors";
+import { StatusBar } from "expo-status-bar";
 const RootLayout = () => {
   const [loaded] = useFonts({
     SpaceMonoRegular: require("../assets/fonts/SpaceMono-Regular.ttf"),
@@ -13,10 +14,9 @@ const RootLayout = () => {
     return null;
   }
   return (
-    <View>
-      <Text>header</Text>
+    <View style={{ backgroundColor: Colors.background, flex: 1 }}>
       <Slot />
-      <Text>footer</Text>
+      <StatusBar style="light" />
     </View>
   );
 };
