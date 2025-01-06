@@ -2,13 +2,23 @@ import { View, Text } from "react-native";
 import React from "react";
 import { Slot } from "expo-router";
 
-const _layout = () => {
+import { useFonts } from "expo-font";
+
+const RootLayout = () => {
+  const [loaded] = useFonts({
+    SpaceMonoRegular: require("../assets/fonts/SpaceMono-Regular.ttf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
   return (
     <View>
-      <Text>_layout</Text>
+      <Text>header</Text>
       <Slot />
+      <Text>footer</Text>
     </View>
   );
 };
 
-export default _layout;
+export default RootLayout;
