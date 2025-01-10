@@ -26,4 +26,26 @@ export const globalStyles = StyleSheet.create({
         textAlign: "right",
         fontWeight: "300",
     },
+    row:{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginBottom: 18,
+        paddingHorizontal: 10,
+    },
+    button:{
+        width: 80,
+        height: 80,
+        backgroundColor: Colors.darkGray,
+        borderRadius: 100,
+        justifyContent: 'center',
+        marginHorizontal: 10,
+    },
+    buttonText:{
+        textAlign: 'center',
+        padding: 10,
+        fontSize: 30,
+        color: 'white',
+        fontWeight: '300',
+        fontFamily: 'SpaceMonoRegular',
+    }
 })
