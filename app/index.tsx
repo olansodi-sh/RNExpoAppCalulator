@@ -1,6 +1,6 @@
 import React from "react";
 
-import { View, Text } from "react-native";
+import { View } from "react-native";
 
 import ThemeText from "@/components/ThemeText";
 import { globalStyles } from "@/styles/global-styles";
@@ -11,12 +11,12 @@ import { Colors } from "@/constants/Colors";
 const CalculatorApp = () => {
   return (
     <View style={globalStyles.calculatorContainer}>
-      //* Resultados
+      
       <View style={{ paddingHorizontal : 30, paddingBottom:20 }}>
           <ThemeText variant="h1"> 50*5000 </ThemeText>
           <ThemeText variant="h2"> 250 </ThemeText>
       </View>
-      //* Botones
+
       <View style={globalStyles.row}> 
         <CalculatorBotton label="C"   colorButton={Colors.lightGray}  onPress={()=>console.log('C')}   blackText />
         <CalculatorBotton label="+/-" colorButton={Colors.lightGray}  onPress={()=>console.log('+/-')} blackText/>

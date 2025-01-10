@@ -1,13 +1,15 @@
-import { View, Text, Pressable } from 'react-native'
 import React from 'react'
+
+import { View, Text, Pressable } from 'react-native'
+import * as Haptics from 'expo-haptics';
+
 import { globalStyles } from '@/styles/global-styles';
 import { Colors } from '@/constants/Colors';
-
 interface CalculatorBottonProps {
     label: string;
     colorButton: string;
     blackText?: boolean;
-    onPress?: () => void;
+    onPress: () => void;
     doubleSize?: boolean;
 }
 
@@ -26,7 +28,11 @@ const CalculatorBotton = ({
         opacity: pressed ? 0.8 : 1,
         width: doubleSize ? 180 : 80,
       })} 
-      onPress={onPress}
+      onPress={()=>{
+        //TODO: Haptics
+        Haptics.selectionAsync()
+        onPress();
+      }}
     >
         <Text 
             style={{
