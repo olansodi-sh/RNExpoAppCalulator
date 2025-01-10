@@ -17,6 +17,7 @@ const CalculatorApp = () => {
     prevNumber,
     
     buildNumber,
+    cleanData
   } = useCalculator()
   return (
     <View style={globalStyles.calculatorContainer}>
@@ -27,7 +28,7 @@ const CalculatorApp = () => {
       </View>
 
       <View style={globalStyles.row}> 
-        <CalculatorBotton label="C"   colorButton={Colors.lightGray}  onPress={()=>buildNumber('C')}   blackText />
+        <CalculatorBotton label="C"   colorButton={Colors.lightGray}  onPress={()=>cleanData}   blackText />
         <CalculatorBotton label="+/-" colorButton={Colors.lightGray}  onPress={()=>buildNumber('+/-')} blackText/>
         <CalculatorBotton label="del" colorButton={Colors.lightGray}  onPress={()=>buildNumber('del')} blackText/>
         <CalculatorBotton label="÷"   colorButton={Colors.orange}     onPress={()=>buildNumber('÷')}  />
