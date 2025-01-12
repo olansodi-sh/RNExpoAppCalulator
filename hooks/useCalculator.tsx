@@ -29,6 +29,23 @@ const useCalculator = () => {
     setFormula('0')
   }
 
+  //* Cambiar el signo
+  const toggleSign = () => {
+    
+    if (number.includes('-')) {
+      return setNumber(number.replace('-', ''))
+    }
+    setNumber('-' + number)
+  }
+
+  //* Eliminar el último dígito
+  const deleteLastDigit = () => {
+
+    if (number.length === 1 || (number.length === 2 && number.includes('-'))) {
+      return setNumber('0')
+    }
+    setNumber(number.slice(0, -1))
+  }
   //* Construir el número
   const buildNumber = (numberString: string) => {
     // Verificar si ya existe el punto decimal
@@ -66,7 +83,9 @@ const useCalculator = () => {
 
     //Methods
     buildNumber,
-    cleanData
+    cleanData,
+    toggleSign,
+    deleteLastDigit
   }
 }
 

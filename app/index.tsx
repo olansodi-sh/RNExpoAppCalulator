@@ -17,7 +17,10 @@ const CalculatorApp = () => {
     prevNumber,
     
     buildNumber,
-    cleanData
+    cleanData,
+    toggleSign,
+    deleteLastDigit,
+
   } = useCalculator()
   return (
     <View style={globalStyles.calculatorContainer}>
@@ -28,9 +31,9 @@ const CalculatorApp = () => {
       </View>
 
       <View style={globalStyles.row}> 
-        <CalculatorBotton label="C"   colorButton={Colors.lightGray}  onPress={()=>cleanData}   blackText />
-        <CalculatorBotton label="+/-" colorButton={Colors.lightGray}  onPress={()=>buildNumber('+/-')} blackText/>
-        <CalculatorBotton label="del" colorButton={Colors.lightGray}  onPress={()=>buildNumber('del')} blackText/>
+        <CalculatorBotton label="C"   colorButton={Colors.lightGray}  onPress={cleanData}   blackText />
+        <CalculatorBotton label="+/-" colorButton={Colors.lightGray}  onPress={toggleSign} blackText/>
+        <CalculatorBotton label="del" colorButton={Colors.lightGray}  onPress={deleteLastDigit} blackText/>
         <CalculatorBotton label="÷"   colorButton={Colors.orange}     onPress={()=>buildNumber('÷')}  />
       </View>
       <View style={globalStyles.row}> 
