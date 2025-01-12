@@ -18,8 +18,16 @@ const useCalculator = () => {
   const lastOperation = React.useRef<Operator>()
 
   useEffect(() => {
+    if (lastOperation.current) {
+      const firstFormulaPart = formula.split(' ').at(0);
+      setFormula(`${firstFormulaPart} ${lastOperation.current} ${number}`);
+    } else {
+      setFormula(number);
+    }
+  }, [number]);
+  useEffect(() => {
     //TODO: Calcular subresultados
-    setFormula(number)
+    // setFormula(number)
   }, [number])
 
   //* Limpiar el número
@@ -46,6 +54,43 @@ const useCalculator = () => {
     }
     setNumber(number.slice(0, -1))
   }
+
+  //* Realizar la operación del ultimo número 
+  const setLasNumber = () => {
+    //TODO: Calculate result
+
+    if(number.endsWith('.')){
+      setPrevNumber(number.slice(0,-1))
+    }
+    
+    setPrevNumber(number)
+    setNumber('0')
+  }
+
+  //* Realizar la operación de división
+  const divideOperation = () => {
+    setLasNumber()
+    lastOperation.current = Operator.divide
+  }
+  //* Realizar la operación de multiplicación
+  const multiplyOperation = () => {
+    setLasNumber()
+    lastOperation.current = Operator.multiply
+  }
+
+  //* Realizar la operación de suma
+  const addOperation = () => {
+    setLasNumber()
+    lastOperation.current = Operator.add
+  }
+
+  //* Realizar la operación de resta
+  const subtractOperation = () => {
+    setLasNumber()
+    lastOperation.current = Operator.subtract
+  }
+  
+
   //* Construir el número
   const buildNumber = (numberString: string) => {
     // Verificar si ya existe el punto decimal
@@ -85,7 +130,11 @@ const useCalculator = () => {
     buildNumber,
     cleanData,
     toggleSign,
-    deleteLastDigit
+    deleteLastDigit,
+    divideOperation,
+    multiplyOperation,
+    addOperation,
+    subtractOperation
   }
 }
 
