@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 enum Operator {
     add = '+',
@@ -11,11 +11,12 @@ enum Operator {
 
 const useCalculator = () => {
 
-  const [formula, setFormula] = useState('')
-  const [number, setNumber] = useState('0')
-  const [prevNumber, setPrevNumber] = useState('0')
-  // se utiliza useRef para guardar la ultima operacion
-  const lastOperation = React.useRef<Operator>()
+  const [formula, setFormula] = useState('0');
+
+  const [number, setNumber] = useState('0');
+  const [prevNumber, setPrevNumber] = useState('0');
+
+  const lastOperation = useRef<Operator>();
 
   useEffect(() => {
     if (lastOperation.current) {
@@ -25,73 +26,109 @@ const useCalculator = () => {
       setFormula(number);
     }
   }, [number]);
+
   useEffect(() => {
-    //TODO: Calcular subresultados
-    // setFormula(number)
-  }, [number])
+    const subResult = calculateSubResult();
+    setPrevNumber(`${subResult}`);
+  }, [formula]);
 
-  //* Limpiar el número
-  const cleanData = () => {
-    setNumber('0')
-    setPrevNumber('0')
-    setFormula('0')
-  }
+  const clean = () => {
+    setNumber('0');
+    setPrevNumber('0');
+    setFormula('0');
 
-  //* Cambiar el signo
+    lastOperation.current = undefined;
+  };
+
   const toggleSign = () => {
-    
     if (number.includes('-')) {
-      return setNumber(number.replace('-', ''))
+      return setNumber(number.replace('-', ''));
     }
-    setNumber('-' + number)
-  }
 
-  //* Eliminar el último dígito
-  const deleteLastDigit = () => {
+    setNumber('-' + number);
+  };
 
-    if (number.length === 1 || (number.length === 2 && number.includes('-'))) {
-      return setNumber('0')
+  const deleteLast = () => {
+    let currentSign = '';
+    let temporalNumber = number;
+
+    if (number.includes('-')) {
+      currentSign = '-';
+      temporalNumber = number.substring(1);
     }
-    setNumber(number.slice(0, -1))
-  }
 
-  //* Realizar la operación del ultimo número 
-  const setLasNumber = () => {
-    //TODO: Calculate result
-
-    if(number.endsWith('.')){
-      setPrevNumber(number.slice(0,-1))
+    if (temporalNumber.length > 1) {
+      return setNumber(currentSign + temporalNumber.slice(0, -1));
     }
-    
-    setPrevNumber(number)
-    setNumber('0')
-  }
 
-  //* Realizar la operación de división
+    setNumber('0');
+  };
+
+  const setLastNumber = () => {
+    calculateResult();
+
+    if (number.endsWith('.')) {
+      setPrevNumber(number.slice(0, -1));
+    }
+
+    setPrevNumber(number);
+    setNumber('0');
+  };
+
   const divideOperation = () => {
-    setLasNumber()
-    lastOperation.current = Operator.divide
-  }
-  //* Realizar la operación de multiplicación
+    setLastNumber();
+    lastOperation.current = Operator.divide;
+  };
+
   const multiplyOperation = () => {
-    setLasNumber()
-    lastOperation.current = Operator.multiply
-  }
+    setLastNumber();
+    lastOperation.current = Operator.multiply;
+  };
 
-  //* Realizar la operación de suma
-  const addOperation = () => {
-    setLasNumber()
-    lastOperation.current = Operator.add
-  }
-
-  //* Realizar la operación de resta
   const subtractOperation = () => {
-    setLasNumber()
-    lastOperation.current = Operator.subtract
-  }
-  
+    setLastNumber();
+    lastOperation.current = Operator.subtract;
+  };
 
-  //* Construir el número
+  const addOperation = () => {
+    setLastNumber();
+    lastOperation.current = Operator.add;
+  };
+
+  const calculateSubResult = () => {
+    const [firstValue, operation, secondValue] = formula.split(' ');
+
+    const num1 = Number(firstValue);
+    const num2 = Number(secondValue); // NaN
+
+    if (isNaN(num2)) return num1;
+
+    switch (operation) {
+      case Operator.add:
+        return num1 + num2;
+
+      case Operator.subtract:
+        return num1 - num2;
+
+      case Operator.multiply:
+        return num1 * num2;
+
+      case Operator.divide:
+        return num1 / num2;
+
+      default:
+        throw new Error(`Operation ${operation} not implemented`);
+    }
+  };
+
+  const calculateResult = () => {
+    const result = calculateSubResult();
+    setFormula(`${result}`);
+
+    lastOperation.current = undefined;
+    setPrevNumber('0');
+  };
+
   const buildNumber = (numberString: string) => {
     // Verificar si ya existe el punto decimal
     if (number.includes('.') && numberString === '.') return;
@@ -121,21 +158,24 @@ const useCalculator = () => {
   };
 
   return {
-    //Props
+    // Props
     formula,
     number,
     prevNumber,
 
-    //Methods
+    // Methods
     buildNumber,
-    cleanData,
+    clean,
     toggleSign,
-    deleteLastDigit,
+    deleteLast,
+
     divideOperation,
     multiplyOperation,
+    subtractOperation,
     addOperation,
-    subtractOperation
-  }
+    calculateSubResult,
+    calculateResult,
+  };
 }
 
 export default useCalculator

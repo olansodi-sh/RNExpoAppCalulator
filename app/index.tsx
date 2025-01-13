@@ -17,13 +17,14 @@ const CalculatorApp = () => {
     prevNumber,
     
     buildNumber,
-    cleanData,
+    clean,
     toggleSign,
-    deleteLastDigit,
+    deleteLast,
     divideOperation,
     multiplyOperation,
     addOperation,
-    subtractOperation
+    subtractOperation,
+    calculateResult
 
   } = useCalculator()
   return (
@@ -42,9 +43,9 @@ const CalculatorApp = () => {
       </View>
 
       <View style={globalStyles.row}> 
-        <CalculatorBotton label="C"   colorButton={Colors.lightGray}  onPress={cleanData}   blackText />
+        <CalculatorBotton label="C"   colorButton={Colors.lightGray}  onPress={clean}   blackText />
         <CalculatorBotton label="+/-" colorButton={Colors.lightGray}  onPress={toggleSign} blackText/>
-        <CalculatorBotton label="del" colorButton={Colors.lightGray}  onPress={deleteLastDigit} blackText/>
+        <CalculatorBotton label="del" colorButton={Colors.lightGray}  onPress={deleteLast} blackText/>
         <CalculatorBotton label="÷"   colorButton={Colors.orange}     onPress={divideOperation}  />
       </View>
       <View style={globalStyles.row}> 
@@ -68,7 +69,7 @@ const CalculatorApp = () => {
       <View style={globalStyles.row}> 
         <CalculatorBotton label="0" colorButton={Colors.darkGray}     onPress={()=>buildNumber('0')}  doubleSize/>
         <CalculatorBotton label="." colorButton={Colors.darkGray}     onPress={()=>buildNumber('.')}/>
-        <CalculatorBotton label="=" colorButton={Colors.orange}       onPress={()=>buildNumber('=')}/>
+        <CalculatorBotton label="=" colorButton={Colors.orange}       onPress={calculateResult}/>
       </View>
     </View>
   );
